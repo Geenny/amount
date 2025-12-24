@@ -1,8 +1,8 @@
 {
   "name": "amount",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "electric circuit simulation",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "start": "npm run version-patch && webpack-dev-server --open --config ./webpack/webpack.config.development.js",
     "start2": "node entry.js config=./webpack/webpack.config.development.js",
