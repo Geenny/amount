@@ -1,7 +1,7 @@
 {
-  "name": "Amount",
-  "version": "0.0.3",
-  "description": "ggine",
+  "name": "amount",
+  "version": "0.0.4",
+  "description": "electric circuit simulation",
   "main": "index.js",
   "scripts": {
     "start": "npm run version-patch && webpack-dev-server --open --config ./webpack/webpack.config.development.js",
@@ -15,7 +15,7 @@
   "keywords": [
     "ggine"
   ],
-  "homepage": "https://github.com/Geenny/ggine#readme",
+  "homepage": "https://github.com/Geenny/amount.git",
   "author": "Geenny",
   "license": "MIT",
   "dependencies": {
