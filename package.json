@@ -1,6 +1,6 @@
 {
   "name": "amount",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "electric circuit simulation",
   "main": "index.ts",
   "scripts": {
