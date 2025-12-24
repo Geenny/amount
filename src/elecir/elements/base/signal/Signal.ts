@@ -1,4 +1,4 @@
-import { Options } from "elecir/core/Options";
+import { Options } from "elecir/core/construct/options/Options";
 import { Element } from "../element/Element";
 import { SignalType } from "./types";
 

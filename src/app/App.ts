@@ -1,15 +1,15 @@
 import { elements } from "elecir/controls/storage/elements";
-import { Element } from "elecir/elements";
+import { Element, ElementType } from "elecir/elements";
 
 export class App  {
 
     constructor() {
 
-        const element1 = elements.create( { name: "Current", pins: [ { name: "" } ] } );
-        const element2 = elements.create( { name: "Transistor", pins: [ { name: "" }, { name: "" }, { name: "" } ] } );
-        const element3 = elements.create( { name: "Resistor", pins: [ { name: "" }, { name: "" } ] } );
+        const element1 = elements.create( { type: ElementType.CURRENT, pins: [ { } ] } );
+        const element2 = elements.create( { type: ElementType.TRANSISTOR, pins: [ { }, { }, { } ] } );
+        const element3 = elements.create( { type: ElementType.WIRE, pins: [ { }, { } ] } );
 
-        const list = elements.list;
+        console.log( elements.list );
 
     }
 

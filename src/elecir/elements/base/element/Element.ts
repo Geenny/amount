@@ -1,52 +1,51 @@
-import { Options } from "elecir/core/Options";
 import { ElementMode } from "./enums";
 import { ElementOptionsType } from "./types";
 import { Pin } from "../pin/Pin";
 import { Signal } from "../signal/Signal";
-import { elements } from "elecir/controls/storage/elements";
 import { PinOptionsType, PinSchemeType } from "../pin/types";
+import { elements } from "elecir/controls/storage/elements";
 import { pins } from "elecir/controls/storage/pins";
+import { Identify } from "elecir/core";
+import { IElement } from "./interface/IElement";
 
-export class Element extends Options {
+export class Element extends Identify implements IElement {
 
-    _pins: Pin[] = [];
-    _signal: Signal;
+    pins: Pin[] = [];
+    signal: Signal;
 
     constructor( options: ElementOptionsType ) {
         super( options );
-        this.pinsCreateFromOptions();
-        this._signalCreate();
+
+        this.create();
     }
 
-    get id(): number { return this._options.id; }
 
-    get name(): string { return this._options.name; }
+    //
+    // GET/SET
+    //
+
+    get name(): string { return this.options.name; }
     set name( name: string | undefined ) {
         const isEditable = name && name.length > 0;
-        if ( isEditable ) this._options.name = name;
+        if ( isEditable ) this.options.name = name;
     }
 
-    get mode(): ElementMode { return this._options.mode || ElementMode.STATIC; }
-
-    get signal(): Signal { return this._signal; }
-
-    get pins(): Pin[] { return this._pins; }
+    get mode(): ElementMode { return this.options.mode || ElementMode.STATIC; }
 
 
     //
-    // OPTIONS
+    // CREATE
     //
-    // optionsSet( options: ElementOptionsType ): void {
-    //     super.optionsSet( options );
-    //     this.pinsCreateFromOptions();
-    // }
-
+    create(): void {
+        this.pinsCreateFromOptions();
+        this.signalCreate();
+    }
 
     //
     // PINS
     //
     pinsCreateFromOptions(): void {
-        const pins = this._options.pins;
+        const pins = this.options.pins;
         if ( !pins || pins.length === 0 ) return;
 
         pins.forEach( ( scheme: PinSchemeType, index: number ) => this.pinCreate( index, scheme ) );
@@ -57,16 +56,16 @@ export class Element extends Options {
         const options: PinOptionsType = { name, element };
 
         const pin = pins.create( options );
-        this._pins.push( pin );
+        this.pins.push( pin );
     }
 
 
     //
     // SIGNAL
     //
-    _signalCreate() {
+    signalCreate() {
         const options = { speed: 0, potential: 5, element: this };
-        this._signal = new Signal( options );
+        this.signal = new Signal( options );
     }
 
 
@@ -88,8 +87,8 @@ export class Element extends Options {
         this.tickProcess( pin );
     }
     tickProcess( pin: Pin ): void {
-        for ( let i = 0; i < this._pins.length; i++ ) {
-            const instance = this._pins[ i ];
+        for ( let i = 0; i < this.pins.length; i++ ) {
+            const instance = this.pins[ i ];
             if ( instance === pin ) continue;
             instance.signal = this.signal;
         }
@@ -104,8 +103,8 @@ export class Element extends Options {
         elements.destroy( this );
     }
     destroyPins(): void {
-        while ( this._pins.length > 0 ) {
-            const pin = this._pins.pop();
+        while ( this.pins.length > 0 ) {
+            const pin = this.pins.pop();
             pin.destroy();
         }
     }

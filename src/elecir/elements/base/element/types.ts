@@ -1,7 +1,8 @@
+import { ElementType } from "elecir/elements/enums";
 import { PinSchemeType } from "../pin/types";
-import { Element } from "./Element";
 import { ElementMode } from "./enums";
 
-type ElementOptionsType = { id?: number, name: string, type?: string, mode?: ElementMode, pins?: PinSchemeType[] };
+type ElementOptionsSchemeType = { ID?: number, name?: string, type: ElementType, mode?: ElementMode, pins?: PinSchemeType[] };
+type ElementOptionsType = { ID: number, name: string, type: ElementType, mode?: ElementMode, pins?: PinSchemeType[] };
 
-export { ElementOptionsType };
+export { ElementOptionsType, ElementOptionsSchemeType };

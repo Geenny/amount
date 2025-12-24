@@ -1,13 +1,18 @@
 export class Unique {
 
-    counter: number;
+    #counter: number;
 
-    constructor( startFrom: number = 0 ) {
-        this.counter = startFrom;
+    constructor( start: number = 0 ) {
+        this.currentSet( start );
     }
 
     next(): number {
-        return this.counter ++;
+        return this.#counter ++;
+    }
+
+    currentSet( value: number ): void {
+        if ( typeof value !== "number" || value <= this.#counter ) return;
+        this.#counter = value;
     }
 
 }
