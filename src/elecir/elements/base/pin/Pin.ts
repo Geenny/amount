@@ -2,21 +2,27 @@ import { pins } from "elecir/controls/storage/pins";
 import { Element } from "../element/Element";
 import { PinOptionsType } from "./types";
 import { Signal } from "../signal/Signal";
+import { IIdentify } from "elecir/core";
 
 /**
  * One Way connector between
  */
-export class Pin {
+export class Pin implements IIdentify {
 
-    #name: string = "~";
+    readonly ID: number;
+    readonly storageID: number;
+
+    #name: string;
     #element: Element;
     #pin?: Pin;
     #signal?: Signal;
 
     constructor( options: PinOptionsType ) {
+        this.ID = options.ID;
+        this.storageID = options.storageID;
+        this.#name = options.name || this.#name;
         this.#name = options.name || this.#name;
         this.#element = options.element;
-        this.#pin = options.pin;
     }
 
     get isFree(): boolean { return !this.#pin; }
@@ -36,22 +42,37 @@ export class Pin {
     //
 
     get signal(): Signal { return this.#signal; }
-    set signal( signal: Signal ) {
-        if ( this.#signal && this.#signal !== signal )
-            debugger;
+
+    #signalSet( signal: Signal ): void {
         this.#signal = signal;
-        this.tick();
     }
 
-    tick(): void {
-        if ( !this.#signal ) return;
 
-        if ( !this.isFree ) {
-            if ( this.#signal !== this.#element.signal ) {
-                this.#pin.signal = this.#signal;
-            } else if ( this.#signal !== this.#pin.signal ) {
-                this.#element.tick( this );
+    //
+    // TRANSPORT
+    //
+
+    receive( source: Element | Pin, signal?: Signal ): void  {
+        if ( this.#signal && this.#signal !== signal )
+            debugger;
+        
+        // Nothing to transport
+        if ( !signal ) return;
+        
+        this.#signalSet( signal );
+
+        if ( source instanceof Element ) {
+            if ( !this.#pin ) return;
+
+            this.#pin.receive( this, signal );
+
+        } else if ( source instanceof Pin ) {
+            if ( this.#pin !== source ) {
+                console.error( `Pin: ${ this.name }: Element: ${ this.element.ID }: Imposiable send from the same pin!!!` );
+                return;
             }
+
+            this.#element.receive( this, signal );
         }
     }
 
@@ -61,10 +82,11 @@ export class Pin {
     //
 
     link( pin: Pin ): boolean {
-        if ( this.#pin === pin ) {
-            console.warn( `Pin of ${ this.#element.name }: trying to set same pin` );
-            return false;
-        }
+        // Can't link to same @Pin
+        if ( this === pin ) return false;
+
+        // @Pin already exist
+        if ( this.#pin === pin ) return false;
 
         this.#pin = pin;
 
@@ -80,9 +102,11 @@ export class Pin {
     //
 
     destroy(): void {
-        this.unlink();
+        this.#pin = undefined;
+        this.#signal = undefined;
         this.#element = undefined;
 
+        // Remove 
         pins.destroy( this );
     }
 

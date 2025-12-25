@@ -1,7 +1,8 @@
 import { Pin } from "./Pin";
 import { Element } from "../element/Element";
 
-type PinSchemeType = { ID?: number, IDToPin?: number };
-type PinOptionsType = { name?: string, element: Element, pin?: Pin };
+// 
+type PinSchemeType = { name?: string };
+type PinOptionsType = { ID: number, storageID: number, name: string, element: Element };
 
 export { PinOptionsType, PinSchemeType };

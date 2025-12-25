@@ -1,5 +1,9 @@
 import { Unique } from "elecir/core/Unique";
-import { Element, IElement, ElementType, ElementOptionsType, ElementOptionsSchemeType, CurrentElement, LinkElement, WireElement, ElementMode } from "elecir/elements";
+import {
+    Element, ElementType, ElementOptionsType, ElementOptionsSchemeType, ElementMode,
+    ElementCurrent, ElementLink, ElementWire, ElementDiod, ElementTransistor, ElementCustom
+} from "elecir/elements";
+
 
 const MAX_ELEMENTS = 10000;
 
@@ -35,13 +39,22 @@ class ElementStorage {
     elementClassByTypeGet( type?: ElementType ): typeof Element {
         switch ( type ) {
             case ElementType.CURRENT:
-                return CurrentElement;
+                return ElementCurrent;
+            
+            case ElementType.LINK:
+                return ElementLink;
             
             case ElementType.WIRE:
-                return WireElement;
+                return ElementWire;
+            
+            case ElementType.DIOD:
+                return ElementDiod;
+            
+            case ElementType.TRANSISTOR:
+                return ElementTransistor;
 
             default:
-                return LinkElement;
+                return ElementCustom;
         }
     }
     elementOptionsBySchemeGet( scheme: ElementOptionsSchemeType ): ElementOptionsType {

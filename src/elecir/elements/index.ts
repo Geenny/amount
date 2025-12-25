@@ -6,14 +6,18 @@ import { Pin } from "./base/pin/Pin";
 
 import { Signal } from "./base/signal/Signal";
 import { SignalType } from "./base/signal/types";
-import { LinkElement } from "./common/link/LinkElement";
-import { CurrentElement } from "./common/current/CurrentElement";
-import { WireElement } from "./common/wire/WireElement";
+import { ElementCurrent } from "./common/current/ElementCurrent";
+import { ElementLink } from "./common/link/ElementLink";
+import { ElementWire } from "./common/wire/ElementWire";
+import { ElementDiod } from "./common/diod/ElementDiod";
+import { ElementTransistor } from "./common/transistor/ElementTransistor";
+import { ElementCustom } from "./expand/custom/ElementCustom";
 import { ElementType } from "./enums";
 
 export {
     IElement, Element, ElementMode, ElementType, ElementOptionsType, ElementOptionsSchemeType,
     Pin,
     Signal, SignalType,
-    CurrentElement, LinkElement, WireElement
+    ElementCurrent, ElementLink, ElementWire, ElementDiod, ElementTransistor,
+    ElementCustom
 };

@@ -44,6 +44,9 @@ export class Element extends Identify implements IElement {
     //
     // PINS
     //
+
+    isExistPin( pin: Pin ): boolean { return this.pins.includes( pin ); }
+
     pinsCreateFromOptions(): void {
         const pins = this.options.pins;
         if ( !pins || pins.length === 0 ) return;
@@ -51,11 +54,8 @@ export class Element extends Identify implements IElement {
         pins.forEach( ( scheme: PinSchemeType, index: number ) => this.pinCreate( index, scheme ) );
     }
     pinCreate( index: number, scheme: PinSchemeType ): void {
-        const name = index.toString();
-        const element = this;
-        const options: PinOptionsType = { name, element };
-
-        const pin = pins.create( options );
+        const pin = pins.create( index, this, scheme );
+        if ( !pin ) debugger;
         this.pins.push( pin );
     }
 
@@ -70,29 +70,54 @@ export class Element extends Identify implements IElement {
 
 
     //
-    // TICK
+    // TRANSPORT
     //
-    tick( pin?: Pin ): void {
-        if ( !pin || !pin.signal ) return;
 
-        if ( pin.element === this ) {
-            console.warn( `Element ${ this.name }: short circuit!` );
+    receive( pin: Pin, signal: Signal ): void {
+        if ( !pin || !signal ) return;
+
+        if ( !this.isExistPin( pin ) ) {
+            console.warn( `Element: ${ this.ID }: Pin Element: ${ pin.element }: Pin from other Element!!!` );
             return;
         }
 
-        const options = pin.signal.cloneOptions();
+        if ( pin.element === this ) {
+            console.warn( `Element ${ this.name }: Short circuit!` );
+            return;
+        }
+
+        const options = signal.cloneOptions();
         if ( options.element ) delete options.element;
         this.signal.optionsSet( options );
 
-        this.tickProcess( pin );
+        // this.tickProcess( pin );
     }
-    tickProcess( pin: Pin ): void {
-        for ( let i = 0; i < this.pins.length; i++ ) {
-            const instance = this.pins[ i ];
-            if ( instance === pin ) continue;
-            instance.signal = this.signal;
-        }
-    }
+
+
+    //
+    // TICK
+    //
+    // tick(): void {
+    //     if ( !pin || !pin.signal ) return;
+
+    //     if ( pin.element === this ) {
+    //         console.warn( `Element ${ this.name }: short circuit!` );
+    //         return;
+    //     }
+
+    //     const options = pin.signal.cloneOptions();
+    //     if ( options.element ) delete options.element;
+    //     this.signal.optionsSet( options );
+
+    //     this.tickProcess( pin );
+    // }
+    // tickProcess( pin: Pin ): void {
+    //     for ( let i = 0; i < this.pins.length; i++ ) {
+    //         const instance = this.pins[ i ];
+    //         if ( instance === pin ) continue;
+    //         instance.signal = this.signal;
+    //     }
+    // }
 
 
     //

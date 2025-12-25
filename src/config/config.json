@@ -1,0 +1,103 @@
+{
+    "descriptions": {
+        "elements.bid": "ID of element from main storage",
+        "elements.access": "Descriptions of accesses",
+        "elements.access.edit": "Can be add/remove PINs to element",
+        "elements.access.move": "Can be moved on element space",
+        "elements.access.unlock": "Unlock add/remove pins by auto",
+        "elements.access.signal": "Can emit signals [per tick]",
+
+        "elements.signal": "Deafult posible signal",
+        "elements.signal.potenetial": "Can generate signal. Just positive value",
+
+        "elements.props": "The signal handler properties",
+        "elements.props.fade": "Attenuation, fading, dying of charge for 1 distance",
+        "elements.props.collect": "Collection in amount of charge [per tick]",
+        "elements.props.pole": "Collection in amount of charge [per tick]"
+    },
+    "elements": [
+        {
+            "bid": 1,
+            "exist": 0,
+            "name": "Default",
+            "access": { "edit": 0, "move": 0, "unlock": 0, "signal": 0 },
+            "signal": { "charge": 0 },
+            "props": { "fade": 0, "collect": 0, "pole": 0 }
+        },
+        {
+            "bid": 2,
+            "exist": 1,
+            "name": "Current Emmiter",
+            "access": { "edit": 0, "move": 0, "unlock": 1, "signal": 1 },
+            "signal": { "charge": 5000000 },
+            "props": { "fade": 0 }
+        },
+        {
+            "bid": 3,
+            "exist": 1,
+            "name": "Current Collect",
+            "access": { "edit": 0, "move": 0, "unlock": 1, "signal": 1 },
+            "signal": { "charge": 0 },
+            "props": { "fade": 0 }
+        },
+        {
+            "bid": 4,
+            "exist": 1,
+            "name": "Link",
+            "access": { "edit": 1, "move": 1, "unlock": 1, "signal": 0 },
+            "props": { "fade": 0 }
+        },
+        {
+            "bid": 5,
+            "exist": 1,
+            "name": "Wire",
+            "access": { "edit": 1, "move": 1, "unlock": 1, "signal": 0 },
+            "props": { "fade": 1 }
+        },
+        {
+            "bid": 6,
+            "exist": 0,
+            "name": "Resistor",
+            "access": { "edit": 1, "move": 1, "unlock": 0, "signal": 0 },
+            "props": { "fade": 1000 }
+        },
+        {
+            "bid": 7,
+            "exist": 0,
+            "name": "Capacitor",
+            "access": { "edit": 1, "move": 1, "unlock": 0, "signal": 0 },
+            "props": { "fade": 10, "collect": 10000000 }
+        },
+        {
+            "bid": 8,
+            "exist": 0,
+            "name": "Inductor",
+            "access": { "edit": 1, "move": 1, "unlock": 0, "signal": 0 },
+            "props": { "fade": 10, "pole": 10000000 }
+        },
+        {
+            "bid": 9,
+            "exist": 0,
+            "name": "Diod",
+            "access": { "edit": 1, "move": 1, "unlock": 0, "signal": 0 },
+            "props": { "fade": 5 }
+        },
+        {
+            "bid": 10,
+            "exist": 0,
+            "name": "Transistor NMOS",
+            "access": { "edit": 1, "move": 1, "unlock": 0, "signal": 0 },
+            "props": { "fade": 5 }
+        },
+        {
+            "bid": 11,
+            "exist": 0,
+            "name": "Transistor PMOS",
+            "access": { "edit": 1, "move": 1, "unlock": 0, "signal": 0 },
+            "props": { "fade": 5 }
+        }
+    ],
+    "multipliers": {
+
+    }
+}

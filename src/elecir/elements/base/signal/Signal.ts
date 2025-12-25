@@ -10,8 +10,6 @@ export class Signal extends Options {
         super( options );
     }
 
-    get speed(): number { return this._options.speed; }
-
     get potential(): number { return this._options.potential; }
 
     get element(): Element { return this._options.element; }
